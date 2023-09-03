@@ -1,0 +1,34 @@
+.cc {
+  height: 3rem;
+}
+.active {
+  background: transparent;
+}
+.inactive {
+  background: transparent;
+}
+
+button {
+  border: none;
+}
+
+tr {
+  height: 10px;
+}
+
+@media (max-width: 500px) {
+  .cc {
+    height: 1.5rem; 
+  }
+  .active,
+  .inactive {
+    background: transparent;
+  }
+  button {
+    border: none;
+  }
+  tr {
+    height: 5px; 
+    width: 15px;
+  }
+}

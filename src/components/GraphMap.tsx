@@ -1,5 +1,3 @@
-//map page using react leaflet
-
 import "../css/graphmap.css";
 import "leaflet/dist/leaflet.css";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +6,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 const GraphMap = () => {
   const navigate = useNavigate();
-
   const countrySpecificResponse = useCountrySpecificQuery();
 
   return (
@@ -32,17 +29,18 @@ const GraphMap = () => {
             </div>
 
             <div className="main-page">
-              <MapContainer
-                style={{ width: "100%", height: "80vh" }}
-                zoom={4}
-                center={[19.4319102, 72.8177933]}
-              >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors'
-                />
-                {countrySpecificResponse.isSuccess &&
-                  countrySpecificResponse.data.map((item: any) => {
+              {countrySpecificResponse.isSuccess &&
+              Array.isArray(countrySpecificResponse.data) ? (
+                <MapContainer
+                  style={{ width: "100%", height: "80vh" }}
+                  zoom={4}
+                  center={[19.4319102, 72.8177933]}
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors'
+                  />
+                  {countrySpecificResponse.data.map((item: any) => {
                     return (
                       <Marker
                         key={item.country}
@@ -57,7 +55,10 @@ const GraphMap = () => {
                       </Marker>
                     );
                   })}
-              </MapContainer>
+                </MapContainer>
+              ) : (
+                <div>Loading...</div>
+              )}
             </div>
           </div>
         </div>

@@ -7,8 +7,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { addContact, updateContact } from "../features/contactSlice";
 import CC from "./miniComponent/CC";
 
+interface ContactItem {
+  id: number;
+  name: string;
+  surname: string;
+  isActive: boolean;
+}
+
 const Contact = () => {
-  const [selectedContact, setSelectedContact] = useState(null);
+  const [selectedContact, setSelectedContact] = useState<ContactItem | null>(
+    null
+  );
   const navigate = useNavigate();
   const contacts = useSelector((state: any) => state.contact.contacts);
   console.log(contacts);
@@ -51,23 +60,32 @@ const Contact = () => {
         const surname = surnameInput.value;
         const isActive = activeInput.checked;
 
-        const updatedContacts = {
-          ...(selectedContact as object),
+        const updatedContact: ContactItem = {
+          id: selectedContact.id,
           name,
           surname,
           isActive,
         };
 
-        dispatch(updateContact(updatedContacts));
+        dispatch(updateContact(updatedContact));
         setSelectedContact(null);
       }
     }
+
     const nameInput = document.querySelector<HTMLInputElement>("#name");
     const surnameInput = document.querySelector<HTMLInputElement>("#surname");
     const activeInput = document.querySelector<HTMLInputElement>("#active");
-    nameInput.value = "";
-    surnameInput.value = "";
-    activeInput.checked = false;
+
+    if (nameInput) {
+      nameInput.value = "";
+    }
+    if (surnameInput) {
+      surnameInput.value = "";
+    }
+    if (activeInput) {
+      activeInput.checked = false;
+    }
+
     console.log("Done");
   };
 
@@ -75,12 +93,14 @@ const Contact = () => {
     const nameInput = document.querySelector<HTMLInputElement>("#name");
     const surnameInput = document.querySelector<HTMLInputElement>("#surname");
     const activeInput = document.querySelector<HTMLInputElement>("#active");
-    //logic of update button
+
+    // Logic of update button
     const contact = contacts.find((item: any) => item.id === id);
     if (contact) {
       setSelectedContact(contact);
       console.log(contact);
     }
+
     if (nameInput && surnameInput && activeInput && contact) {
       nameInput.value = contact.name;
       surnameInput.value = contact.surname;

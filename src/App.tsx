@@ -4,7 +4,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import { Provider } from "react-redux";
 import store from "./store";
 import GraphMap from "./components/GraphMap";
-import Chart from "./components/chart.tsx";
+import Chart from "./components/Chart";
 
 function App() {
   return (

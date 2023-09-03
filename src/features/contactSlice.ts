@@ -36,11 +36,14 @@ export const contactSlice = createSlice({
 
     updateContact: (
       state,
-      action: PayloadAction<{ id: number; updatedContact: Partial<Contact> }>
+      action: PayloadAction<{
+        id: number;
+        name: string;
+        surname: string;
+        isActive: boolean;
+      }>
     ) => {
-      const { id, name, surname, isActive, updatedContact } = action.payload;
-      console.log(isActive, name, surname);
-      console.log(updatedContact);
+      const { id, name, surname, isActive } = action.payload;
 
       const index = state.contacts.findIndex((contact) => contact.id === id);
 
@@ -54,7 +57,6 @@ export const contactSlice = createSlice({
         };
         state.contacts = updatedContacts;
       }
-      console.log(state.contacts);
     },
   },
 });
